@@ -8,7 +8,7 @@
   <%- include('./partials/style.ejs') %>
 </head>
 <body>
-  <div class="navBar">
+  <div class="auth">
     <h1>MySoldier</h1>
     <a href="/register">Register</a>
     <a href="/login">Log in</a>
@@ -19,5 +19,8 @@
       <p style="color: red;"><%= error %></p>
     <% }) %>
   <% } %>
+  <div class="card center greet">
+    <p>Welcome Soldier!</p>
+  </div>
 </body>
 </html>
