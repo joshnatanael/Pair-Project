@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>MySoldier</h1>
+    <button><a href="/admin/missions">Mission</a></button>
+    <button><a href="/admin/soldiers">Profile Soldier</a></button>
+    <h1>Edit Mission</h1>
+    <% if(errors){ %>
+        <% errors.split(',').forEach(el => { %>
+            <p style="color: red;"><%= el %></p>
+        <% }) %>
+    <% } %>
+    <form action="/admin/missions/<%= mission.id %>/edit" method="post">
+        <p>
+            Name: <br>
+            <input type="text" name="name" value="<%= mission.name %>">
+        </p>
+        <p>
+            Location: <br>
+            <select name="location">
+                <option value="" disabled selected>--Choose--</option>
+                <% ['Ukraine', 'Syria', 'Qatar', 'Lebanon', 'Afghanistan'].forEach(el => { %>
+                    <option value="<%= el %>" <%= el == mission.location ? 'selected' : '' %>><%= el %></option>
+                <% }) %>
+            </select>
+        </p>
+        <p>
+            Point: <br>
+            <input type="number" name="point" value="<%= mission.point %>">
+        </p>
+        <input type="submit" value="Update Mission">
+    </form>
+</body>
+</html>

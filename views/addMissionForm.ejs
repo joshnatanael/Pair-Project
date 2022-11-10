@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>MySoldier</h1>
+    <button><a href="/admin/missions">Mission</a></button>
+    <button><a href="/admin/soldiers">Profile Soldier</a></button>
+    <h1>Add New Mission</h1>
+    <% if(errors){ %>
+        <% errors.split(',').forEach(el => { %>
+            <p style="color: red;"><%= el %></p>
+        <% }) %>
+    <% } %>
+
+    <form action="/admin/missions/add" method="post">
+        <p>
+            Name: <br>
+            <input type="text" name="name">
+        </p>
+        <p>
+            Location: <br>
+            <select name="location">
+                <option value="" disabled selected>--Choose--</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="Syria">Syria</option>
+                <option value="Qatar">Qatar</option>
+                <option value="Lebanon">Lebanon</option>
+                <option value="Afghanistan">Afghanistan</option>
+            </select>
+        </p>
+        <p>
+            Point: <br>
+            <input type="number" name="point">
+        </p>
+        <input type="submit" value="Add New Mission">
+    </form>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+</head>
+<body>
+    <h1>MySoldier</h1>
+    <h2><%= soldier.fullName %></h2>
+    <p>
+        <img src="<%= soldier.profilePictureUrl %>" alt="<%= soldier.name %>">
+    </p>
+    <h3>Username: <%= soldier.User.username %></h3>
+    <h3>Email: <%= soldier.User.email %></h3>
+    <h3>Role: <%= soldier.User.role %></h3>
+    <h3>Missions:</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Level Of Difficulty</th>
+                <th>Point</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let index = 0 %>
+            <% soldier.User.Missions.forEach(el => { %>
+                <tr>
+                    <td><%= ++index %></td>
+                    <td><%= el.formattingName() %></td>
+                    <td><%= el.location %></td>
+                    <td><%= el.levelOfDifficulty %></td>
+                    <td><%= el.point %></td>
+                    <td>
+                        <form action="/profile" method="post" enctype="multipart/form-data">
+                            <input type="file" name="avatar" />
+                            <input type="submit" value="Complete">
+                          </form>
+                        <!-- <button><a href="">Complete Mission</a></button> -->
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
