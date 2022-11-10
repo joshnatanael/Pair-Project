@@ -8,6 +8,11 @@
 </head>
 <body>
   <%- include('./partials/nav-bar.ejs') %>
+  <% if(errors){ %>
+    <% errors.split(',').forEach(error=>{ %>
+      <p style="color: red;"><%= error %></p>
+    <% }) %>
+  <% } %>
   <img src="<%= soldierData.profilePictureUrl %>" alt="<%= soldierData.fullName %>'s Photo">
   <p>Name: <%= soldierData.fullName %></p>
   <p>Age: <%= soldierData.age %></p>

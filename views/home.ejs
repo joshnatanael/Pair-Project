@@ -7,6 +7,16 @@
   <title>MySoldier</title>
 </head>
 <body>
-  <%- include('./partials/nav-bar.ejs') %>
+  <div>
+    <h1>MySoldier</h1>
+    <a href="/register">Register</a>
+    <a href="/login">Log in</a>
+    <a href="/logout">Log out</a>
+  </div>
+  <% if(errors){ %>
+    <% errors.split(',').forEach(error=>{ %>
+      <p style="color: red;"><%= error %></p>
+    <% }) %>
+  <% } %>
 </body>
 </html>

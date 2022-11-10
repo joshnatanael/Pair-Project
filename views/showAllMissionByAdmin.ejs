@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('./partials/nav-bar.ejs') %>
+    <button><a href="/admin/missions">Mission</a></button>
+    <button><a href="/admin/soldiers">Profile Soldier</a></button>
+    <h1>Mission List</h1>
+    <p>
+        <button><a href="/admin/missions/add">Add Mission</a></button>
+    </p>
+    <p>
+        <form action="/admin/missions" method="get">
+            <p>
+                Filter by Location:
+                <select name="location">
+                    <option value="" disabled selected>--Choose--</option>
+                    <% ['Ukraine', 'Syria', 'Qatar', 'Lebanon', 'Afghanistan'].forEach(el => { %>
+                        <option value="<%= el %>"><%= el %></option>
+                    <% }) %>
+                </select>
+                Or by Level:
+                <select name="level">
+                    <option value="" disabled selected>--Choose--</option>
+                    <% ['High', 'Medium', 'Easy'].forEach(el => { %>
+                        <option value="<%= el %>"><%= el %></option>
+                    <% }) %>
+                </select>
+                <input type="submit" value="Filter">
+            </p>
+        </form>
+    </p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Level Of Difficulty</th>
+                <th>Point</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% missions.forEach((mission, index)=>{ %>
+                <tr>
+                    <th><%= ++index %></th>
+                    <th><%= mission.name %></th>
+                    <th><%= mission.location %></th>
+                    <th><%= mission.levelOfDifficulty %></th>
+                    <th><%= mission.point %></th>
+                    <th><a href="/admin/missions/<%= mission.id %>/edit">Edit</a></th>
+                </tr>
+            <% }) %>
+            </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soldier List</title>
+</head>
+<body>
+    <%- include('./partials/nav-bar.ejs') %>
+    <button><a href="/admin/missions">Mission</a></button>
+    <button><a href="/admin/soldiers">Profile Soldier</a></button>
+    <h1>Soldier List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Profile Picture</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Mission Taken</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let index = 0 %>
+            <% soldier.forEach(el => { %>
+                <tr>
+                    <td><%= ++index %></td>
+                    <td>
+                        <img src="<%= el.profilePictureUrl %>" alt="<%= el.name %>" width="100" height="100">
+                    </td>
+                    <td><%= el.fullName %></td>
+                    <td><%= el.age %></td>
+                    <td><%= el.gender %></td>
+                    <td><%= el.User.username %></td>
+                    <td><%= el.User.email %></td>
+                    <td><%= el.User.role %></td>
+                    <td><%= el.User.Missions.length %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

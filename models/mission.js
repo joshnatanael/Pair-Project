@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Mission.belongsTo(models.User);
     }
+    formattingName(){
+      return capitalizeFirstWords(this.name)
+    }
   }
   Mission.init({
     name: {
@@ -38,18 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    levelOfDifficulty: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Level of difficulty is required'
-        },
-        notEmpty: {
-          msg: 'Level of difficulty is required'
-        }
-      }
-    },
+    levelOfDifficulty: DataTypes.STRING,
     point: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -69,6 +61,25 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Mission',
+  });
+  Mission.beforeUpdate((mission, options) => {
+    console.log('masuk update')
+    if(mission.point >= 10000){
+      mission.levelOfDifficulty = 'High'
+    } else if(mission.point >= 5000){
+      mission.levelOfDifficulty = 'Medium'
+    } else if(mission.point >= 100){
+      mission.levelOfDifficulty = 'Easy'
+    }
+  });
+  Mission.beforeCreate((mission, options) => {
+    if(mission.point >= 10000){
+      mission.levelOfDifficulty = 'High'
+    } else if(mission.point >= 5000){
+      mission.levelOfDifficulty = 'Medium'
+    } else if(mission.point >= 100){
+      mission.levelOfDifficulty = 'Easy'
+    }
   });
   return Mission;
 };

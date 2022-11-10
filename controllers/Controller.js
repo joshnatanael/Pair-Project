@@ -1,9 +1,11 @@
 const {Mission, Soldier, User} = require('../models');
 const bcrypt = require('bcryptjs');
+const capitalizeFirstWords = require('../helpers/formattingNameMission');
 
 class Controller{
   static home(req, res){
-    res.render('home');
+    const errors = req.query.errors;
+    res.render('home', {errors});
   }
   static register(req, res){
     const errors = req.query.errors;
@@ -39,7 +41,12 @@ class Controller{
           if(bcrypt.compareSync(password, user.password)){
             req.session.userId = user.id;
             req.session.role = user.role;
-            return res.redirect('/profile')
+            if(user.role === "Admin"){
+              return res.redirect('/admin')  
+            }
+            else{
+              return res.redirect('/users/profile')
+            }
           }
         }
         const errors = `Invalid username/password`;
@@ -69,6 +76,7 @@ class Controller{
     })
   }
   static profile(req, res){
+    const errors = req.query.errors;
     Soldier.findOne({
       where: {
         id: +req.session.userId
@@ -76,7 +84,7 @@ class Controller{
       include: User
     })
       .then(soldierData=>{
-        res.render('profile', {soldierData});
+        res.render('profile', {soldierData, errors});
       })
       .catch(err=>{
         res.send(err);
@@ -103,7 +111,7 @@ class Controller{
       }
     })
       .then(_=>{
-        res.redirect('/missions');
+        res.redirect('/users/missions');
       })
       .catch(err=>{
         res.send(err);
@@ -115,27 +123,115 @@ class Controller{
     }
     else{
       const errors = `Access denied! Please contact admin!`;
-      return res.redirect(`/missions?errors=${errors}`);
+      return res.redirect(`/users/profile?errors=${errors}`);
     }
   }
+  static landingPageAdmin(req, res){
+    res.render('landingPageAdmin')
+  }
+  static showAllMissionForAdmin(req, res){
+    const { location, level } = req.query
+    let options = {
+      include: User
+    }
+    if(location){
+      options.where = {
+        location: location
+      }
+    }
+
+    if(level){
+      options.where = {
+        levelOfDifficulty: level
+      }
+    }
+    Mission.findAll(options)
+    .then(missions => {
+      res.render('showAllMissionByAdmin', { missions, capitalizeFirstWords })
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
   static addMission(req, res){
-    const errors = req.query.errors;
-    res.render('add-mission', {errors})
+    const { errors } = req.query
+    res.render('addMissionForm', { errors })
   }
   static saveMission(req, res){
-    const {name, location, levelOfDifficulty, point} = req.body;
-    Mission.create({name, location, levelOfDifficulty, point})
-      .then(_=>{
-        res.redirect('/missions');
-      })
-      .catch(err=>{
-        if(err.name === "SequelizeValidationError"){
-          res.redirect(`/register?errors=${err.errors.map(error=>error.message)}`);
-        }
-        else{
-          res.send(err);
-        }
-      })
+    const { name, location, point } = req.body
+    Mission.create({ name, location, point })
+    .then(_ => {
+      res.redirect('/admin/missions')
+    })
+    .catch(err => {
+      if(err.name === 'SequelizeValidationError'){
+        const errors = err.errors.map(el => el.message)
+        res.redirect(`/admin/missions/add?errors=${errors}`)
+      }
+      else{
+        res.send(err)
+      }
+    })
+  }
+  static editMission(req, res){
+    const { errors } = req.query
+    const { id } = req.params
+    Mission.findByPk(+id)
+    .then(mission => {
+      res.render('editMissionForm', { mission, errors })
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+  static updateMission(req, res){
+    const { name, location, point } = req.body
+    Mission.update({ name, location, point }, {
+      where: {
+        id: +req.params.id
+      },  
+      returning: true,
+      individualHooks: true
+    })
+    .then(_ => {
+      res.redirect('/admin/missions')
+    })
+    .catch(err => {
+      if(err.name === 'SequelizeValidationError'){
+        const errors = err.errors.map(el => el.message)
+        res.redirect(`/admin/missions/${+req.params.id}/edit?errors=${errors}`)
+      }
+      else{
+        res.send(err)
+      }
+    })
+  }
+  static deleteMission(req, res){
+    Mission.destroy({
+      where: {
+        id: +req.params.id
+      }
+    })
+    .then(_ => {
+      res.redirect('/admin/missions')
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+  static showAllProfiles(req, res){
+    Soldier.findAll({ 
+      include: {
+        model: User,
+        include: Mission
+      }
+    })
+    .then(soldier => {
+      res.render('showAllSoldiers', { soldier })
+    })
+    .catch(err => {
+      res.send(err)
+    })
   }
 }
 
