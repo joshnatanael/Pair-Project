@@ -148,7 +148,7 @@ class Controller{
       }
     }
     Mission.findAll(options)
-    .then(missions => {
+    .then(missions => {console.log(missions);
       res.render('showAllMissionByAdmin', { missions })
     })
     .catch(err => {
@@ -244,17 +244,23 @@ class Controller{
     })
   }
   static uploadFile(req, res, next) {
-    Mission.update({ status: true }, {
-      where: {
-        id: +req.params.id
-      }
-    })
-    .then(_ => {
-      res.redirect('/users/profile')
-    })
-    .catch(err => {
-      res.send(err)
-    })
+    if(!req.file){
+      const errors = `Please submit evidence`
+      res.redirect(`/users/profile?errors=${errors}`)
+    }
+    else{
+      Mission.update({ status: true }, {
+        where: {
+          id: +req.params.id
+        }
+      })
+      .then(_ => {
+        res.redirect('/users/profile')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    }
   }
   static isSoldier(req, res, next){
     if(req.session.role === "Soldier"){

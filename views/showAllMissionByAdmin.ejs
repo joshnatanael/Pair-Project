@@ -47,12 +47,12 @@
                         <td><%= mission.formattingName() %></td>
                         <td><%= mission.location %></td>
                         <td><%= mission.levelOfDifficulty %></td>
-                        <% if(mission.status){ %>
-                            <td>Pending</td>
-                        <% }else{ %>
-                            <td>Completed</td>
-                        <% } %>
                         <td><%= mission.point %></td>
+                        <% if(mission.status){ %>
+                            <td>Completed</td>
+                            <% }else{ %>
+                            <td>Pending</td>
+                        <% } %>
                         <td>
                             <a href="/admin/missions/<%= mission.id %>/edit" class="editButton">Edit</a>
                             <a href="/admin/missions/<%= mission.id %>/delete" class="deleteButton">Delete</a>
