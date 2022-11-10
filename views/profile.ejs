@@ -20,5 +20,39 @@
   <p>Username: <%= soldierData.User.username %></p>
   <p>Email: <%= soldierData.User.email %></p>
   <p>Role: <%= soldierData.User.role %></p>
+  <table border="1">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Level Of Difficulty</th>
+            <th>Point</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% let index = 0 %>
+        <% soldierData.User.Missions.forEach(el => { %>
+            <tr>
+                <td><%= ++index %></td>
+                <td><%= el.formattingName() %></td>
+                <td><%= el.location %></td>
+                <td><%= el.levelOfDifficulty %></td>
+                <td><%= el.point %></td>
+                <td>
+                  <% if(el.status) { %>
+                      Completed
+                  <% } else { %>
+                      <form action="/user/profile/upload/<%= el.id %>" method="post" enctype="multipart/form-data">
+                          <input type="file" name="avatar" />
+                          <input type="submit" value="Complete">
+                      </form>
+                  <% } %>
+              </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
 </body>
 </html>

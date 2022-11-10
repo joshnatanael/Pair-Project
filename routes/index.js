@@ -1,6 +1,8 @@
 const Controller = require('../controllers/Controller');
 
 const router = require('express').Router();
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 router.get('/', Controller.home);
 router.get('/register', Controller.register);
@@ -12,6 +14,7 @@ router.get('/logout', Controller.logout);
 router.get('/users/profile', Controller.profile);
 router.get('/users/missions', Controller.missions);
 router.get('/missions/:id/add', Controller.applyMission);
+router.post('/user/profile/upload/:id', upload.single('avatar'), Controller.uploadFile)
 router.use(Controller.isAdmin);
 router.get('/admin', Controller.landingPageAdmin);
 router.get('/admin/missions', Controller.showAllMissionForAdmin);

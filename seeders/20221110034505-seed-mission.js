@@ -10,7 +10,8 @@ module.exports = {
       point: 5000,
       UserId: 1,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      status: false
     }]);
   },
 

@@ -1,4 +1,5 @@
 'use strict';
+const capitalizeWords = require('../helpers/formattingNameMission');
 const {
   Model
 } = require('sequelize');
@@ -13,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Mission.belongsTo(models.User);
     }
     formattingName(){
-      return capitalizeFirstWords(this.name)
+      return capitalizeWords(this.name)
     }
   }
   Mission.init({
@@ -51,13 +52,18 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: 'Point is required'
+        },
+        min: {
+          args: 100,
+          msg: `Minimum Point is 100`
         }
       }
     },
     UserId: {
       type: DataTypes.INTEGER,
       defaultValue: null
-    }
+    },
+    status: DataTypes.BOOLEAN 
   }, {
     sequelize,
     modelName: 'Mission',

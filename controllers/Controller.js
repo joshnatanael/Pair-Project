@@ -1,6 +1,5 @@
 const {Mission, Soldier, User} = require('../models');
 const bcrypt = require('bcryptjs');
-const capitalizeFirstWords = require('../helpers/formattingNameMission');
 
 class Controller{
   static home(req, res){
@@ -81,7 +80,10 @@ class Controller{
       where: {
         id: +req.session.userId
       },
-      include: User
+      include: {
+        model: User,
+        include: Mission
+      }
     })
       .then(soldierData=>{
         res.render('profile', {soldierData, errors});
@@ -147,7 +149,7 @@ class Controller{
     }
     Mission.findAll(options)
     .then(missions => {
-      res.render('showAllMissionByAdmin', { missions, capitalizeFirstWords })
+      res.render('showAllMissionByAdmin', { missions })
     })
     .catch(err => {
       res.send(err)
@@ -220,14 +222,35 @@ class Controller{
     })
   }
   static showAllProfiles(req, res){
-    Soldier.findAll({ 
-      include: {
-        model: User,
-        include: Mission
-      }
-    })
+    Soldier.showAllProfileUser()
     .then(soldier => {
       res.render('showAllSoldiers', { soldier })
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+  static deleteMission(req, res){
+    Mission.destroy({
+      where: {
+        id: +req.params.id
+      }
+    })
+    .then(_ => {
+      res.redirect('/admin/missions')
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+  static uploadFile(req, res, next) {
+    Mission.update({ status: true }, {
+      where: {
+        id: +req.params.id
+      }
+    })
+    .then(_ => {
+      res.redirect('/user/profile')
     })
     .catch(err => {
       res.send(err)

@@ -50,11 +50,14 @@
             <% missions.forEach((mission, index)=>{ %>
                 <tr>
                     <th><%= ++index %></th>
-                    <th><%= mission.name %></th>
+                    <th><%= mission.formattingName() %></th>
                     <th><%= mission.location %></th>
                     <th><%= mission.levelOfDifficulty %></th>
                     <th><%= mission.point %></th>
-                    <th><a href="/admin/missions/<%= mission.id %>/edit">Edit</a></th>
+                    <th>
+                        <a href="/admin/missions/<%= mission.id %>/edit">Edit</a>
+                        <a href="/admin/missions/<%= mission.id %>/delete">Delete</a>
+                    </th>
                 </tr>
             <% }) %>
             </tbody>

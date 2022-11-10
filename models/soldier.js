@@ -1,4 +1,5 @@
 'use strict';
+
 const {
   Model
 } = require('sequelize');
@@ -11,6 +12,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Soldier.belongsTo(models.User);
+    }
+    static showAllProfileUser(){
+      let options = { 
+        include: { 
+          all: true, nested: true 
+        }
+      }
+      return Soldier.findAll(options)
     }
   }
   Soldier.init({
