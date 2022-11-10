@@ -148,7 +148,7 @@ class Controller{
       }
     }
     Mission.findAll(options)
-    .then(missions => {console.log(missions);
+    .then(missions => {
       res.render('showAllMissionByAdmin', { missions })
     })
     .catch(err => {
