@@ -4,37 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Soldier-Edit Mission</title>
+    <%- include('./partials/style.ejs') %>
 </head>
 <body>
     <%- include('./partials/nav-bar.ejs') %>
-    <button><a href="/admin/missions">Mission</a></button>
-    <button><a href="/admin/soldiers">Profile Soldier</a></button>
-    <h1>Edit Mission</h1>
-    <% if(errors){ %>
-        <% errors.split(',').forEach(el => { %>
-            <p style="color: red;"><%= el %></p>
-        <% }) %>
-    <% } %>
-    <form action="/admin/missions/<%= mission.id %>/edit" method="post">
-        <p>
-            Name: <br>
-            <input type="text" name="name" value="<%= mission.name %>">
-        </p>
-        <p>
-            Location: <br>
-            <select name="location">
+    <div class="card">
+        <h1>Edit Mission</h1>
+        <% if(errors){ %>
+            <% errors.split(',').forEach(el => { %>
+                <p style="color: red;"><%= el %></p>
+            <% }) %>
+        <% } %>
+        <form action="/admin/missions/<%= mission.id %>/edit" method="post">
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="<%= mission.name %>" id="name">
+            <label for="location">Location:</label>
+            <select name="location" id="location">
                 <option value="" disabled selected>--Choose--</option>
                 <% ['Ukraine', 'Syria', 'Qatar', 'Lebanon', 'Afghanistan'].forEach(el => { %>
                     <option value="<%= el %>" <%= el == mission.location ? 'selected' : '' %>><%= el %></option>
                 <% }) %>
             </select>
-        </p>
-        <p>
-            Point: <br>
-            <input type="number" name="point" value="<%= mission.point %>">
-        </p>
-        <input type="submit" value="Update Mission">
-    </form>
+            <label for="point">Point:</label>
+            <input type="number" name="point" id="point" value="<%= mission.point %>">
+            <button>Update Mission</button>
+        </form>
+    </div>
 </body>
 </html>

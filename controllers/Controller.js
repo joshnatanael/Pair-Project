@@ -250,11 +250,20 @@ class Controller{
       }
     })
     .then(_ => {
-      res.redirect('/user/profile')
+      res.redirect('/users/profile')
     })
     .catch(err => {
       res.send(err)
     })
+  }
+  static isSoldier(req, res, next){
+    if(req.session.role === "Soldier"){
+      next()
+    }
+    else{
+      const errors = `Soldier only!`;
+      return res.redirect(`/users/profile?errors=${errors}`);
+    }
   }
 }
 

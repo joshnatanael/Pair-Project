@@ -5,25 +5,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MySoldier-Login</title>
+  <%- include('../partials/style.ejs') %>
 </head>
 <body>
-  <div>
+  <div class="auth">
     <h1>MySoldier</h1>
     <a href="/register">Register</a>
     <a href="/login">Log in</a>
     <a href="/logout">Log out</a>
   </div>
   <% if(errors){ %>
-    <% errors.split(',').forEach(error=>{ %>
-      <p style="color: red;"><%= error %></p>
-    <% }) %>
+    <div class="errors">
+      <% errors.split(',').forEach(error=>{ %>
+        <p style="color: red;"><%= error %></p>
+      <% }) %>
+    </div>
   <% } %>
-  <form action="/login" method="post">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" placeholder="Ex: Major123"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br>
-    <button>Log in</button>
-  </form>
+  <div class="card">
+    <form action="/login" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Ex: Major123"><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br>
+      <button>Log in</button>
+    </form>
+  </div>
 </body>
 </html>

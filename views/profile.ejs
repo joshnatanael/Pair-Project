@@ -5,54 +5,61 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MySoldier-Profile</title>
+  <%- include('./partials/style.ejs') %>
 </head>
 <body>
   <%- include('./partials/nav-bar.ejs') %>
   <% if(errors){ %>
-    <% errors.split(',').forEach(error=>{ %>
-      <p style="color: red;"><%= error %></p>
-    <% }) %>
+    <div class="errors">
+      <% errors.split(',').forEach(error=>{ %>
+        <p style="color: red;"><%= error %></p>
+      <% }) %>
+    </div>
   <% } %>
-  <img src="<%= soldierData.profilePictureUrl %>" alt="<%= soldierData.fullName %>'s Photo">
-  <p>Name: <%= soldierData.fullName %></p>
-  <p>Age: <%= soldierData.age %></p>
-  <p>Gender: <%= soldierData.gender %></p>
-  <p>Username: <%= soldierData.User.username %></p>
-  <p>Email: <%= soldierData.User.email %></p>
-  <p>Role: <%= soldierData.User.role %></p>
-  <table border="1">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Level Of Difficulty</th>
-            <th>Point</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% let index = 0 %>
-        <% soldierData.User.Missions.forEach(el => { %>
+  <div class="card center">
+    <img src="<%= soldierData.profilePictureUrl %>" alt="<%= soldierData.fullName %>'s Photo">
+    <p><a class="bold">Name:</a> <%= soldierData.fullName %></p>
+    <p><a class="bold">Age:</a> <%= soldierData.age %></p>
+    <p><a class="bold">Gender:</a> <%= soldierData.gender %></p>
+    <p><a class="bold">Username:</a> <%= soldierData.User.username %></p>
+    <p><a class="bold">Email:</a> <%= soldierData.User.email %></p>
+    <p><a class="bold">Role:</a> <%= soldierData.User.role %></p>
+    <% if(soldierData.User.role === "Soldier"){ %>
+      <table>
+        <thead>
             <tr>
-                <td><%= ++index %></td>
-                <td><%= el.formattingName() %></td>
-                <td><%= el.location %></td>
-                <td><%= el.levelOfDifficulty %></td>
-                <td><%= el.point %></td>
-                <td>
-                  <% if(el.status) { %>
-                      Completed
-                  <% } else { %>
-                      <form action="/user/profile/upload/<%= el.id %>" method="post" enctype="multipart/form-data">
-                          <input type="file" name="avatar" />
-                          <input type="submit" value="Complete">
-                      </form>
-                  <% } %>
-              </td>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Level Of Difficulty</th>
+                <th>Point</th>
+                <th>Action</th>
             </tr>
-        <% }) %>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <% let index = 0 %>
+            <% soldierData.User.Missions.forEach(el => { %>
+                <tr>
+                    <td><%= ++index %></td>
+                    <td><%= el.formattingName() %></td>
+                    <td><%= el.location %></td>
+                    <td><%= el.levelOfDifficulty %></td>
+                    <td><%= el.point %></td>
+                    <td>
+                      <% if(el.status) { %>
+                          Completed
+                      <% } else { %>
+                          <form action="/users/profile/upload/<%= el.id %>" method="post" enctype="multipart/form-data">
+                              <input type="file" name="avatar" />
+                              <input type="submit" value="Complete">
+                          </form>
+                      <% } %>
+                  </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } %>
+  </div>
 </body>
 </html>

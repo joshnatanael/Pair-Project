@@ -12,9 +12,9 @@ router.post('/login', Controller.loginSuccess);
 router.use(Controller.isLoggedIn);
 router.get('/logout', Controller.logout);
 router.get('/users/profile', Controller.profile);
-router.get('/users/missions', Controller.missions);
+router.get('/users/missions', Controller.isSoldier, Controller.missions);
 router.get('/missions/:id/add', Controller.applyMission);
-router.post('/user/profile/upload/:id', upload.single('avatar'), Controller.uploadFile)
+router.post('/users/profile/upload/:id', upload.single('avatar'), Controller.uploadFile)
 router.use(Controller.isAdmin);
 router.get('/admin', Controller.landingPageAdmin);
 router.get('/admin/missions', Controller.showAllMissionForAdmin);

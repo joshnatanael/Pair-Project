@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
+    <title>MySoldier-Admin</title>
+    <%- include('./partials/style.ejs') %>
 </head>
 <body>
     <%- include('./partials/nav-bar.ejs') %>
-    <button><a href="/admin/missions">Mission</a></button>
-    <button><a href="/admin/soldiers">Profile Soldier</a></button>
+    <div class="card center greet">
+        <p>Welcome Admin!</p>
+    </div>
 </body>
 </html>

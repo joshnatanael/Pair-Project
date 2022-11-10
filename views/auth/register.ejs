@@ -5,43 +5,50 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MySoldier-Register</title>
+  <%- include('../partials/style.ejs') %>
 </head>
 <body>
-  <div>
+  <div class="auth">
     <h1>MySoldier</h1>
     <a href="/register">Register</a>
     <a href="/login">Log in</a>
     <a href="/logout">Log out</a>
   </div>
   <% if(errors){ %>
-    <% errors.split(',').forEach(error=>{ %>
-      <p style="color: red;"><%= error %></p>
-    <% }) %>
+    <div class="errors">
+      <% errors.split(',').forEach(error=>{ %>
+        <p style="color: red;"><%= error %></p>
+      <% }) %>
+    </div>
   <% } %>
-  <form action="/register" method="post">
-    <label for="fullName">Full Name:</label><br>
-    <input type="text" id="fullName" name="fullName" placeholder="Ex: John Doe"><br>
-    <label for="age">Age:</label><br>
-    <input type="number" id="age" name="age" placeholder="Ex: 35"><br>
-    <label>Gender</label>
-    <input type="radio" id="male" name="gender" value="Male">
-    <label for="male">Male</label><br>
-    <input type="radio" id="female" name="gender" value="Female">
-    <label for="female">Female</label><br>
-    <label for="profilePictureUrl">Profile Picture URL:</label><br>
-    <input type="text" id="profilePictureUrl" name="profilePictureUrl" placeholder="Ex: https://cdn-icons-png.flaticon.com/512/3939/3939528.png"><br>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" placeholder="Ex: Major123"><br>
-    <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email" placeholder="Ex: major123@example.com"><br>
-    <label for="password">Password:</label><br>
-    <input type="text" id="password" name="password"><br>
-    <label for="role">Role:</label>
-    <select name="role" id="role">
-      <option value="Soldier">Soldier</option>
-      <option value="Admin">Admin</option>
-    </select><br>
-    <button>Register</button>
-  </form>
+  <div class="card">
+    <form action="/register" method="post">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" name="fullName" placeholder="Ex: John Doe"><br>
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" placeholder="Ex: 35"><br>
+      <label>Gender</label>
+      <span>
+        <input type="radio" id="male" name="gender" value="Male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="Female">
+        <label for="female">Female</label><br>
+      </span>
+      <label for="profilePictureUrl">Profile Picture URL:</label>
+      <input type="text" id="profilePictureUrl" name="profilePictureUrl" placeholder="Ex: https://cdn-icons-png.flaticon.com/512/3939/3939528.png"><br>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Ex: Major123"><br>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" placeholder="Ex: major123@example.com"><br>
+      <label for="password">Password:</label>
+      <input type="text" id="password" name="password"><br>
+      <label for="role">Role:</label>
+      <select name="role" id="role">
+        <option value="Soldier">Soldier</option>
+        <option value="Admin">Admin</option>
+      </select><br>
+      <button>Register</button>
+    </form>
+  </div>
 </body>
 </html>

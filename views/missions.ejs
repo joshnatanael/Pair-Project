@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MySoldier-Missions</title>
+  <%- include('./partials/style.ejs') %>
 </head>
 <body>
   <%- include('./partials/nav-bar.ejs') %>
@@ -13,13 +14,11 @@
       <p style="color: red;"><%= error %></p>
     <% }) %>
   <% } %>
-  <a href="/admin/missions/add">Add Mission</a>
   <% missionsData.forEach(missionData=>{ %>
-    <div class="mission">
-      <h1><%= missionData.name %></h1>
-      <h2><%= missionData.location %></h2>
-      <p><%= missionData.difficulty %></p>
-      <p><%= missionData.point %></p>
+    <div class="mission card gap">
+      <h1>Missions: <%= missionData.formattingName() %></h1>
+      <h2>Location: <%= missionData.location %></h2>
+      <p>Points: <%= missionData.point %></p>
       <a href="/missions/<%= missionData.id %>/add">Apply</a>
     </div>
   <% }) %>

@@ -4,27 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MySoldier-Add Mission</title>
+    <%- include('./partials/style.ejs') %>
 </head>
 <body>
     <%- include('./partials/nav-bar.ejs') %>
-    <button><a href="/admin/missions">Mission</a></button>
-    <button><a href="/admin/soldiers">Profile Soldier</a></button>
-    <h1>Add New Mission</h1>
     <% if(errors){ %>
-        <% errors.split(',').forEach(el => { %>
-            <p style="color: red;"><%= el %></p>
-        <% }) %>
+        <div class="errors">
+            <% errors.split(',').forEach(el => { %>
+                <p style="color: red;"><%= el %></p>
+            <% }) %>
+        </div>
     <% } %>
-
-    <form action="/admin/missions/add" method="post">
-        <p>
-            Name: <br>
+    <div class="card">
+        <h1>Add New Mission</h1>
+        <form action="/admin/missions/add" method="post">
+            <label for="name">Mission Name:</label>
             <input type="text" name="name">
-        </p>
-        <p>
-            Location: <br>
-            <select name="location">
+            <label for="location">Location:</label>
+            <select name="location" id="location">
                 <option value="" disabled selected>--Choose--</option>
                 <option value="Ukraine">Ukraine</option>
                 <option value="Syria">Syria</option>
@@ -32,12 +30,10 @@
                 <option value="Lebanon">Lebanon</option>
                 <option value="Afghanistan">Afghanistan</option>
             </select>
-        </p>
-        <p>
-            Point: <br>
+            <label for="point">Point:</label>
             <input type="number" name="point">
-        </p>
-        <input type="submit" value="Add New Mission">
-    </form>
+            <button>Add New Mission</button>
+        </form>
+    </div>
 </body>
 </html>
