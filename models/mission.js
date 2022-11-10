@@ -14,10 +14,58 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Mission.init({
-    name: DataTypes.STRING,
-    location: DataTypes.STRING,
-    levelOfDifficulty: DataTypes.STRING,
-    point: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Mission name is required'
+        },
+        notEmpty: {
+          msg: 'Mission name is required'
+        }
+      }
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Location is required'
+        },
+        notEmpty: {
+          msg: 'Location is required'
+        }
+      }
+    },
+    levelOfDifficulty: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Level of difficulty is required'
+        },
+        notEmpty: {
+          msg: 'Level of difficulty is required'
+        }
+      }
+    },
+    point: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Point is required'
+        },
+        notEmpty: {
+          msg: 'Point is required'
+        }
+      }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      defaultValue: null
+    }
   }, {
     sequelize,
     modelName: 'Mission',

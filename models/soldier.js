@@ -14,10 +14,58 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Soldier.init({
-    fullName: DataTypes.STRING,
-    age: DataTypes.INTEGER,
-    gender: DataTypes.STRING,
-    profilePictureUrl: DataTypes.STRING,
+    fullName: {
+      type :DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Name is required'
+        },
+        notEmpty: {
+          msg: 'Name is required'
+        }
+      }
+    },
+    age: {
+      type :DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Age is required'
+        },
+        notEmpty: {
+          msg: 'Age is required'
+        },
+        min:{
+          args:[19],
+          msg: "Must be older than 19 years old"
+        }
+      }
+    },
+    gender: {
+      type :DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Gender is required'
+        },
+        notEmpty: {
+          msg: 'Gender is required'
+        }
+      }
+    },
+    profilePictureUrl: {
+      type :DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Profile Picture URL is required'
+        },
+        notEmpty: {
+          msg: 'Profile Picture URL is required'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySoldier-Add Mission</title>
+</head>
+<body>
+  <%- include('./partials/nav-bar.ejs') %>
+  <% if(errors){ %>
+    <% errors.split(',').forEach(error=>{ %>
+      <p style="color: red;"><%= error %></p>
+    <% }) %>
+  <% } %>
+  <form action="/missions/add" method="post">
+    <label for="name">Mission name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="location">Location:</label><br>
+    <input type="text" id="location" name="location"><br>
+    <label for="levelOfDifficulty">Level Of Difficulty:</label>
+    <select name="levelOfDifficulty" id="levelOfDifficulty">
+      <option value="Easy">Easy</option>
+      <option value="Medium">Medium</option>
+      <option value="Hard">Hard</option>
+    </select><br>
+    <label for="point">Point:</label><br>
+    <input type="number" id="point" name="point"><br>
+    <button>Add Mission</button>
+  </form>
+</body>
+</html>

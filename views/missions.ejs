@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySoldier-Missions</title>
+</head>
+<body>
+  <%- include('./partials/nav-bar.ejs') %>
+  <% if(errors){ %>
+    <% errors.split(',').forEach(error=>{ %>
+      <p style="color: red;"><%= error %></p>
+    <% }) %>
+  <% } %>
+  <a href="/missions/add">Add Mission</a>
+  <% missionsData.forEach(missionData=>{ %>
+    <div class="mission">
+      <h1><%= missionData.name %></h1>
+      <h2><%= missionData.location %></h2>
+      <p><%= missionData.difficulty %></p>
+      <p><%= missionData.point %></p>
+      <a href="/missions/<%= missionData.id %>/add">Apply</a>
+    </div>
+  <% }) %>
+</body>
+</html>
